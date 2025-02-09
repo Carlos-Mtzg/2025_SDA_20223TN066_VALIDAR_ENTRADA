@@ -28,17 +28,11 @@
                     <div class="form-group w-100">
                         <label class="form-label fw-bold text-secondary" for="">RFC:</label>
                         <input id="rfc" class="form-control" required type="text" placeholder="Escriba el RFC">
-                        <div class="invalid-feedback">
-                            Por favor ingrese un RFC válido
-                        </div>
                     </div>
-                    <!-- Telefono -->
+                    <!-- Teléfono -->
                     <div class="form-group w-100">
                         <label class="form-label fw-bold text-secondary" for="telefono">Teléfono:</label>
                         <input id="telefono" class="form-control" required type="tel" placeholder="Número de teléfono">
-                        <div class="invalid-feedback">
-                            Ingresa un número de teléfono válido
-                        </div>
                     </div>
                 </div>
                 <!-- Contacto -->
@@ -46,19 +40,14 @@
                     <label class="form-label fw-bold text-secondary" for="">Contacto:</label>
                     <input id="contacto" class="form-control" required type="text"
                         placeholder="Ingrese el nombre de contacto">
-                    <div class="invalid-feedback">
-                        Por favor ingrese un contacto válido (no números)
-                    </div>
                 </div>
                 <!-- Correo -->
                 <div class="form-group">
                     <label class="form-label fw-bold text-secondary" for="">Correo:</label>
                     <input id="correo" class="form-control" required type="text"
                         placeholder="Ingrese el correo electrónico">
-                    <div class="invalid-feedback">
-                        Por favor ingrese un correo electrónico válido
-                    </div>
                 </div>
+                <!-- Botón -->
                 <div class="button-container d-flex justify-content-center pt-3">
                     <button id="btn-submit" class="btn btn-success px-4 disabled" type="submit">
                         Enviar
@@ -76,6 +65,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             let subirBtn = document.getElementById('btn-submit');
+            let form = document.querySelector("form");
 
             var input = document.querySelector("#telefono");
             var iti = window.intlTelInput(input, {
@@ -83,50 +73,78 @@
                 utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js"
             });
 
-            input.addEventListener('blur', function () {
-                if (iti.isValidNumber()) {
-                    input.classList.remove('is-invalid');
-                    subirBtn.classList.remove('disabled');
+            function validarFormulario() {
+                let isValid = true;
+
+                // Razon Social
+                let razonSocialInput = document.getElementById('razon_social');
+                if (!razonSocialInput.value.trim()) {
+                    razonSocialInput.classList.add('is-invalid');
+                    isValid = false;
                 } else {
-                    input.classList.add('is-invalid');
-                    subirBtn.classList.add('disabled');
+                    razonSocialInput.classList.remove('is-invalid');
+                    razonSocialInput.classList.add('is-valid');
                 }
-            });
 
-            let correoPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-            let correoInput = document.getElementById('correo');
-            correoInput.addEventListener('blur', function () {
-                if (!correoPattern.test(correoInput.value)) {
-                    correoInput.classList.add('is-invalid');
-                    subirBtn.classList.add('disabled');
-                } else {
-                    correoInput.classList.remove('is-invalid');
-                    subirBtn.classList.remove('disabled');
-                }
-            });
-
-
-            let rfcPattern = /^[A-ZÑ&]{3,4}\d{6}[A-Z\d]{3}$/;
-            let rfcInput = document.getElementById('rfc');
-            rfcInput.addEventListener('blur', function () {
+                // RFC
+                let rfcPattern = /^[A-ZÑ&]{3,4}\d{6}[A-Z\d]{3}$/;
+                let rfcInput = document.getElementById('rfc');
                 if (!rfcPattern.test(rfcInput.value.toUpperCase())) {
                     rfcInput.classList.add('is-invalid');
-                    subirBtn.classList.add('disabled');
+                    isValid = false;
                 } else {
                     rfcInput.classList.remove('is-invalid');
-                    subirBtn.classList.remove('disabled');
+                    rfcInput.classList.add('is-valid');
                 }
+
+                // Teléfono
+                if (!iti.isValidNumber()) {
+                    input.classList.add('is-invalid');
+                    isValid = false;
+                } else {
+                    input.classList.remove('is-invalid');
+                    input.classList.add('is-valid');
+                }
+
+                // Contacto
+                let contactoPattern = /^[A-Za-zÁÉÍÓÚÑáéíóúñ\s]+$/;
+                let contactoInput = document.getElementById('contacto');
+                if (!contactoPattern.test(contactoInput.value)) {
+                    contactoInput.classList.add('is-invalid');
+                    isValid = false;
+                } else {
+                    contactoInput.classList.remove('is-invalid');
+                    contactoInput.classList.add('is-valid');
+                }
+
+                // Correo
+                let correoPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+                let correoInput = document.getElementById('correo');
+                if (!correoPattern.test(correoInput.value)) {
+                    correoInput.classList.add('is-invalid');
+                    isValid = false;
+                } else {
+                    correoInput.classList.remove('is-invalid');
+                    correoInput.classList.add('is-valid');
+                }
+
+                // Botón
+                if (isValid) {
+                    subirBtn.classList.remove('disabled');
+                } else {
+                    subirBtn.classList.add('disabled');
+                }
+
+                return isValid;
+            }
+
+            document.querySelectorAll("input").forEach(input => {
+                input.addEventListener("blur", validarFormulario);
             });
 
-            let contactoPattern = /^[A-Za-zÁÉÍÓÚÑáéíóúñ\s]+$/;
-            let contactoInput = document.getElementById('contacto');
-            contactoInput.addEventListener('blur', function () {
-                if (!contactoPattern.test(contacto.value)) {
-                    contacto.classList.add('is-invalid');
-                    subirBtn.classList.add('disabled');
-                } else {
-                    contacto.classList.remove('is-invalid');
-                    subirBtn.classList.remove('disabled');
+            form.addEventListener("submit", function (event) {
+                if (!validarFormulario()) {
+                    event.preventDefault();
                 }
             });
         });
