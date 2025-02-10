@@ -26,7 +26,8 @@
                 <div class="d-flex align-items-center justify-content-between custom-container">
                     <!-- RFC -->
                     <div class="col-12 col-md-6 form-group rfc-container">
-                        <label class="form-label fw-bold text-secondary" for="">RFC: <span class="fw-lighter">(ej. TAV910101ABC)</span></label>
+                        <label class="form-label fw-bold text-secondary" for="">RFC: <span class="fw-lighter">(ej.
+                                TAV910101ABC)</span></label>
                         <input id="rfc" class="form-control" required type="text" placeholder="Escriba el RFC">
                     </div>
                     <!-- Teléfono -->
@@ -43,8 +44,8 @@
                 </div>
                 <!-- Correo -->
                 <div class="form-group">
-                    <label class="form-label fw-bold text-secondary" for="">Correo: <span
-                            class="fw-lighter">(ej. email@example.com)</span></label>
+                    <label class="form-label fw-bold text-secondary" for="">Correo: <span class="fw-lighter">(ej.
+                            email@example.com)</span></label>
                     <input id="correo" class="form-control" required type="text"
                         placeholder="Ingrese el correo electrónico">
                 </div>
@@ -79,7 +80,8 @@
 
                 // Razon Social
                 let razonSocialInput = document.getElementById('razon_social');
-                if (!razonSocialInput.value.trim()) {
+                let invalidCharsPattern = /[<>]/;
+                if (!razonSocialInput.value.trim() || invalidCharsPattern.test(razonSocialInput.value)) {
                     razonSocialInput.classList.add('is-invalid');
                     isValid = false;
                 } else {
@@ -88,7 +90,7 @@
                 }
 
                 // RFC
-                let rfcPattern = /^[A-ZÑ&]{3,4}\d{6}[A-Z\d]{3}$/;
+                let rfcPattern = /^(?!.*[<>])[A-ZÑ&]{3,4}\d{6}[A-Z\d]{3}$/;
                 let rfcInput = document.getElementById('rfc');
                 if (!rfcPattern.test(rfcInput.value.toUpperCase())) {
                     rfcInput.classList.add('is-invalid');
@@ -108,7 +110,7 @@
                 }
 
                 // Contacto
-                let contactoPattern = /^[A-Za-zÁÉÍÓÚÑáéíóúñ\s]+$/;
+                let contactoPattern = /^(?!.*[<>])[A-Za-zÁÉÍÓÚÑáéíóúñ\s]+$/;
                 let contactoInput = document.getElementById('contacto');
                 if (!contactoPattern.test(contactoInput.value.trim())) {
                     contactoInput.classList.add('is-invalid');
@@ -119,8 +121,9 @@
                 }
 
                 // Correo
-                let correoPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+                let correoPattern = /^[^@]+@[^@]+\.[^@]+$/;
                 let correoInput = document.getElementById('correo');
+
                 if (!correoPattern.test(correoInput.value)) {
                     correoInput.classList.add('is-invalid');
                     isValid = false;
