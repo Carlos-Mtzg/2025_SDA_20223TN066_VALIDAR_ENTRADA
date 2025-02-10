@@ -14,11 +14,7 @@
 
 <body>
     <div class="container-fluid d-flex flex-column justify-content-center align-items-center" style="height: 100vh;">
-        <div id="alert" class="alert alert-fixed alert-warning d-flex gap-3 d-none" role="alert">
-            <i class="bi bi-exclamation-circle"></i>
-            <p class="my-0">Ejemplo de campo válido para el RFC: <strong>TAV910101ABC</strong></p>
-        </div>
-        <div class="form-container rounded shadow d-flex flex-column p-5" style="width: 600px;">
+        <div class="form-container rounded shadow d-flex flex-column p-5">
             <h1 class="text-center text-uppercase pb-3">Registro de Empresa</h1>
             <form class="row d-flex flex-column gap-3" method="post">
                 <!-- Razon Social -->
@@ -27,15 +23,14 @@
                     <input id="razon_social" class="form-control" required type="text"
                         placeholder="Escriba la razón social">
                 </div>
-                <div class="d-flex align-items-center justify-content-between gap-3">
-
+                <div class="d-flex align-items-center justify-content-between custom-container">
                     <!-- RFC -->
-                    <div class="form-group w-100">
-                        <label class="form-label fw-bold text-secondary" for="">RFC:</label>
+                    <div class="col-12 col-md-6 form-group rfc-container">
+                        <label class="form-label fw-bold text-secondary" for="">RFC: <span class="fw-lighter">(ej. TAV910101ABC)</span></label>
                         <input id="rfc" class="form-control" required type="text" placeholder="Escriba el RFC">
                     </div>
                     <!-- Teléfono -->
-                    <div class="form-group w-100">
+                    <div class="col-12 col-md-6 form-group telefono-container">
                         <label class="form-label fw-bold text-secondary" for="telefono">Teléfono:</label>
                         <input id="telefono" class="form-control" required type="tel" placeholder="Número de teléfono">
                     </div>
@@ -49,7 +44,7 @@
                 <!-- Correo -->
                 <div class="form-group">
                     <label class="form-label fw-bold text-secondary" for="">Correo: <span
-                            class="text-secondary fw-lighter">(email@example.com)</span></label>
+                            class="fw-lighter">(ej. email@example.com)</span></label>
                     <input id="correo" class="form-control" required type="text"
                         placeholder="Ingrese el correo electrónico">
                 </div>

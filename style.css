@@ -1,6 +1,37 @@
 .alert-fixed {
     position: fixed;
     top: 0;
-    margin-top: 8rem;
+    margin-top: 3rem;
     z-index: 1050;
+}
+
+.telefono-container {
+    display: flex;
+    flex-direction: column;
+    padding-left: 0.5rem;
+}
+
+.rfc-container {
+    padding-right: 0.5rem;
+}
+
+@media (max-width: 768px) {
+    .custom-container {
+        flex-direction: column;
+    }
+
+    .telefono-container {
+        display: flex;
+        flex-direction: column;
+        padding-left: 0rem;
+    }
+
+    .rfc-container {
+        padding-right: 0rem;
+        padding-bottom: 1rem;
+    }
+
+    .alert-fixed{
+        display: none !important;
+    }
 }
