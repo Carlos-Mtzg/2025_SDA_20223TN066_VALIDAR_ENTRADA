@@ -118,7 +118,7 @@
                 // Contacto
                 let contactoPattern = /^[A-Za-zÁÉÍÓÚÑáéíóúñ\s]+$/;
                 let contactoInput = document.getElementById('contacto');
-                if (!contactoPattern.test(contactoInput.value)) {
+                if (!contactoPattern.test(contactoInput.value.trim())) {
                     contactoInput.classList.add('is-invalid');
                     isValid = false;
                 } else {
