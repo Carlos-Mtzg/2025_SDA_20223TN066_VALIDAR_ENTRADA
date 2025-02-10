@@ -88,17 +88,14 @@
                 }
 
                 // RFC
-                let alert = document.getElementById("alert");
                 let rfcPattern = /^[A-ZÑ&]{3,4}\d{6}[A-Z\d]{3}$/;
                 let rfcInput = document.getElementById('rfc');
                 if (!rfcPattern.test(rfcInput.value.toUpperCase())) {
                     rfcInput.classList.add('is-invalid');
-                    alert.classList.remove('d-none')
                     isValid = false;
                 } else {
                     rfcInput.classList.remove('is-invalid');
                     rfcInput.classList.add('is-valid');
-                    alert.classList.add('d-none')
                 }
 
                 // Teléfono
